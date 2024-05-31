@@ -1,35 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Run JavaScript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Example</title>
 </head>
 <body>
-  <script>
-    // Paste your JavaScript code here
-    fetch("https://aureus.wtf/scriptapi", {
-      "headers": {
-        "accept": "*/*",
-        "accept-language": "pl-PL,pl;q=0.7",
-        "content-type": "application/json;charset=UTF-8",
-        "priority": "u=1, i",
-        "sec-ch-ua": "\"Brave\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\"",
-        "sec-ch-ua-mobile": "20",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "sec-gpc": "1",
-        "referrerPolicy": "no-referrer"
-      },
-      "body": JSON.stringify({
-        "src": "cmVxdWlyZSg0NTMzMzg1MzQzKS5TbGl1bnQoI2Vudmlyb25tZW50SWQp"
-      }),
-      "method": "POST",
-      "mode": "cors",
-      "credentials": "include"
-    });
-  </script>
+    <h1>API Example</h1>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username">
+    </div>
+    <div>
+        <label for="script">Script:</label>
+        <input type="text" id="script">
+    </div>
+    <button onclick="callAPI()">Submit</button>
+
+    <script>
+        function callAPI() {
+            const username = document.getElementById('username').value;
+            const script = document.getElementById('script').value;
+
+            // Constructing the request body
+            const requestBody = {
+                src: btoa(`return(${script}).toString();`)
+            };
+
+            fetch("https://aureus.wtf/scriptapi", {
+                method: "POST",
+                headers: {
+                    "accept": "*/*",
+                    "accept-language": "pl-PL,pl;q-0.7",
+                    "content-type": "application/json;charset=UTF-8",
+                    "priority": "u=1, i",
+                    "sec-ch-ua": "\"Brave\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\"",
+                    "sec-ch-ua-mobile": "20",
+                    "sec-ch-ua-platform": "\"Windows\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "sec-gpc": "1",
+                    "referrerPolicy": "no-referrer"
+                },
+                credentials: "include",
+                mode: "cors",
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // You can do something with the response here
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
